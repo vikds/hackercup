@@ -1,5 +1,7 @@
 # Facebook Hacker Cup just for fun.
 
+https://www.facebook.com/codingcompetitions/hacker-cup/
+
 ## Online Qualifications 2021
 
 To be processed
