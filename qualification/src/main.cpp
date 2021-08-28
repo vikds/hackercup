@@ -1,9 +1,12 @@
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <unordered_set>
 
 #include <getopt.h>
 #include <sysexits.h>
@@ -70,6 +73,42 @@ bool delete_file(const std::string& file_name) {
     return unlink(file_name.c_str()) != -1;
 }
 
+static const std::unordered_set<char> VOWELS = {'A', 'E', 'I', 'O', 'U'};
+
+int ResultA1(const std::string& str) {
+    std::unordered_map<char, int> ch_count;
+    char max_char = ' ';
+    int max_count = 0;
+    for (const char& ch: str) {
+        int count = ch_count[ch]++;
+        if (count > max_count) {
+            max_count = count;
+            max_char = ch;
+        }
+    }
+    int result = 0;
+    for (const auto& [ch, count]: ch_count) {
+        if (ch == max_char) {
+            continue;
+        }
+    }
+
+    return 0;
+}
+
+void SolveA1(const Arguments& args) {
+    std::ifstream input(args.input_file);
+    std::ofstream output(args.output_file);
+
+    int tasks = 0;
+    std::string str;
+    input >> tasks;
+    for (int t = 1; t <= tasks; t++) {
+        input >> str;
+        std::cout << "Case #" << t << ": " << ResultA1(str) << std::endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
     try {
         Arguments args = ParseArguments(argc, argv);
@@ -82,7 +121,7 @@ int main(int argc, char* argv[]) {
             delete_file(args.output_file);
         }
 
-        // TODO
+        SolveA1(args);
 
     } catch(const std::exception& ex) {
         return EXIT_FAILURE;
