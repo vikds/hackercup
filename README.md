@@ -2,9 +2,13 @@
 
 https://www.facebook.com/codingcompetitions/hacker-cup/
 
-## Online Qualifications 2021
+## Results 2021
 
-To be processed
+### Online Qualifications
+
+Score: `43 / 100` points
+Rank: `4 109`th out of `34 588`
+[Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2021/certificate/2945131779054766)
 
 ## C++ requirements
 
