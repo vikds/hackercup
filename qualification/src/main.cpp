@@ -2,6 +2,7 @@
 #include <functional>
 #include <iostream>
 #include <limits>
+#include <map>
 #include <queue>
 #include <sstream>
 #include <string>
@@ -312,6 +313,117 @@ void SolveA2(const Arguments& args) {
     }
 }
 
+using Grid = std::vector<std::string>;
+
+struct Cell {
+    int r;
+    int c;
+
+    bool operator==(const Cell& rhs) const {
+        return r == rhs.r && c == rhs.c;
+    }
+
+    bool operator!=(const Cell& rhs) const {
+        return r != rhs.r || c != rhs.c;
+    }
+};
+
+struct CellHash {
+    size_t operator()(const Cell& cell) const {
+        return cell.r * 17 + cell.c * 31;
+    }
+};
+
+struct LineEstimation {
+    bool can_win = true;
+    std::unordered_set<Cell, CellHash> dots;
+
+    void Count(const Grid& grid, int r, int c) {
+        char ch = grid[r][c];
+        switch (ch) {
+            case 'O': can_win = false; break;
+            case '.': dots.insert({r, c}); break;
+            default: break;
+        }
+    }
+};
+
+struct MovesCounter {
+    std::unordered_set<Cell, CellHash> single_moves;
+    std::map<int, int> moves_count;
+
+    bool Empty() const {
+        return moves_count.empty();
+    }
+
+    void Count(const LineEstimation& line) {
+        if (!line.can_win) {
+            return;
+        }
+        if (line.dots.size() == 1) {
+            const Cell& cell = *line.dots.begin();
+            const auto& [it, inserted] = single_moves.insert(cell);
+            if (!inserted) {
+                return;
+            }
+        }
+        moves_count[line.dots.size()]++;
+    }
+
+    std::pair<int, int> GetSmallestMovesCount() const {
+        auto it = moves_count.begin();
+        if (it == moves_count.end()) {
+            throw std::runtime_error("Empty moves count");
+        }
+        return *it;
+    }
+};
+
+std::string ResultB(const Grid& grid) {
+    int N = grid.size();
+    MovesCounter counter;
+    for (int r = 0; r < N; r++) {
+        LineEstimation row;
+        for (int c = 0; c < N; c++) {
+            row.Count(grid, r, c);
+        }
+        counter.Count(row);
+    }
+    for (int c = 0; c < N; c++) {
+        LineEstimation col;
+        for (int r = 0; r < N; r++) {
+            col.Count(grid, r, c);
+        }
+        counter.Count(col);
+    }
+    if (counter.Empty()) {
+        return "Impossible";
+    }
+    const auto& [moves, count] = counter.GetSmallestMovesCount();
+    std::stringstream ss;
+    ss << moves << " " << count;
+    return ss.str();
+}
+
+void SolveB(const Arguments& args) {
+    std::ifstream input(args.input_file);
+    std::ofstream output(args.output_file);
+
+    int tasks = 0;
+    input >> tasks;
+    for (int t = 1; t <= tasks; t++) {
+        int N = 0;
+        input >> N;
+        Grid grid;
+        for (int i = 0; i < N; i++) {
+            std::string str;
+            input >> str;
+            grid.push_back(str);
+        }
+        output << "Case #" << t << ": " << ResultB(grid) << std::endl;
+    }
+}
+
 
 int main(int argc, char* argv[]) {
     try {
@@ -325,9 +437,13 @@ int main(int argc, char* argv[]) {
             delete_file(args.output_file);
         }
 
-        SolveA2(args);
+        // SolveA1(args);
+        // SolveA2(args);
+
+        SolveB(args);
 
     } catch(const std::exception& ex) {
+        std::cerr << "Exception: " << ex.what() << std::endl;
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
