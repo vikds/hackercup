@@ -8,7 +8,7 @@ https://www.facebook.com/codingcompetitions/hacker-cup/
 
 Score: `43/100` points
 
-Rank: `4036`th out of `13381` (total `34588`)
+Rank: `4036`th out of `12687` (total `34588`)
 
 [Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2021/certificate/2945131779054766)
 
