@@ -119,7 +119,6 @@ struct Interval {
     Hand hand = Hand::BOTH;
     int64_t prefix = 0;
     int64_t length = 0;
-    int64_t suffix = 0;
 };
 
 int ResultA2(const std::string& str) {
