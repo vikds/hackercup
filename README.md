@@ -4,21 +4,20 @@ https://www.facebook.com/codingcompetitions/hacker-cup/
 
 ## Results 2021
 
+
+[Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2021/certificate/2945131779054766)
+
 ### Online Qualifications
 
 Score: `43/100` points
 
 Rank: `4037`th out of `12692` (total participants `34588`)
 
-[Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2021/certificate/2945131779054766)
-
 ### Round 1
 
 Score: `28/100` points
 
 Rank: `4191`th out of `6811` (total participants `12692`)
-
-[Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2021/certificate/2945131779054766)
 
 ## C++ requirements
 
