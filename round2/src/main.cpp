@@ -234,6 +234,14 @@ int CutAndCheck(const std::vector<std::vector<int>>& graph, const std::vector<st
     return result;
 }
 
+struct PairHash {
+    std::size_t operator()(const std::pair<int,int>& v) const {
+        return v.first * 17 + v.second * 31;
+    }
+};
+
+using PairSet = std::unordered_set<std::pair<int, int>, PairHash>;
+
 std::vector<int> GetPath(const std::vector<std::vector<int>>& graph, int start, int end) {
     std::unordered_set<int> visited({start});
     std::unordered_map<int, int> parent;
@@ -262,25 +270,25 @@ std::vector<int> GetPath(const std::vector<std::vector<int>>& graph, int start, 
     return path;
 }
 
-struct PairHash {
-    std::size_t operator()(const std::pair<int,int>& v) const {
-        return v.first * 17 + v.second * 31;
-    }
-};
-
 int ConnectAndCheck(const std::vector<std::vector<int>>& graph, const std::vector<std::pair<int, int>>& edges,
                     const std::unordered_map<int, std::vector<int>>& freq_towns) {
-    std::unordered_set<std::pair<int, int>, PairHash> connected;
+    PairSet connected;
     for (const auto& [freq, towns]: freq_towns) {
         if (towns.size() < 2) {
             continue;
         }
+        std::vector<int> visited(graph.size(), false);
         for (int i = 0; i < towns.size() - 1; i++) {
+            if (visited[towns[i]] && visited[towns[i + 1]]) {
+                continue;
+            }
             std::vector<int> path = GetPath(graph, towns[i], towns[i + 1]);
             for (int j = 0; j < path.size() - 1; j++) {
                 int src = path[j];
                 int dst = path[j + 1];
                 connected.insert({std::min(src, dst), std::max(src, dst)});
+                visited[src] = true;
+                visited[dst] = true;
             }
         }
     }
@@ -324,8 +332,7 @@ void SolveA2(const Arguments& args) {
         for (int n = 0; n < N - 1; n++) {
             int src, dst;
             input >> src >> dst;
-            src--;
-            dst--;
+            src--; dst--;
             graph[src].push_back(dst);
             graph[dst].push_back(src);
             edges.push_back({std::min(src, dst), std::max(src, dst)});
