@@ -17,7 +17,13 @@ Rank: `4037`th out of `12692` (total participants `34586`)
 
 Score: `28/100` points
 
-Rank: `4175`th out of `6787` (total participants `12692`)
+Rank: `4175`th out of `6789` (total participants `12692`)
+
+### Round 2
+
+Score: `12/100` points
+
+Rank: `2577`th out of `2832` (total participants `6789`)
 
 ## C++ requirements
 
