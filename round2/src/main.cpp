@@ -242,14 +242,16 @@ struct PairHash {
 
 using PairSet = std::unordered_set<std::pair<int, int>, PairHash>;
 
-std::vector<int> GetPath(const std::vector<std::vector<int>>& graph, int start, int end) {
+std::vector<int> GetPath(const std::vector<std::vector<int>>& graph, const std::unordered_set<int>& connected, int start, int end) {
     std::unordered_set<int> visited({start});
     std::unordered_map<int, int> parent;
     std::queue<int> queue({start});
+    int node = end;
     while (!queue.empty()) {
         int src = queue.front();
         queue.pop();
-        if (src == end) {
+        if (src == end || connected.find(src) != connected.end()) {
+            node = src;
             break;
         }
         for (const int& dst: graph[src]) {
@@ -261,7 +263,9 @@ std::vector<int> GetPath(const std::vector<std::vector<int>>& graph, int start, 
             parent[dst] = src;
         }
     }
-    int node = end;
+    if (node == start) {
+        return {start};
+    }
     std::vector<int> path({node});
     do {
         node = parent[node];
@@ -272,29 +276,35 @@ std::vector<int> GetPath(const std::vector<std::vector<int>>& graph, int start, 
 
 int ConnectAndCheck(const std::vector<std::vector<int>>& graph, const std::vector<std::pair<int, int>>& edges,
                     const std::unordered_map<int, std::vector<int>>& freq_towns) {
-    PairSet connected;
+    PairSet essential;
     for (const auto& [freq, towns]: freq_towns) {
         if (towns.size() < 2) {
             continue;
         }
-        std::vector<int> visited(graph.size(), false);
+        std::unordered_set<int> connected;
         for (int i = 0; i < towns.size() - 1; i++) {
-            if (visited[towns[i]] && visited[towns[i + 1]]) {
+            if (connected.find(towns[i]) != connected.end() &&
+                connected.find(towns[i + 1]) != connected.end()) {
                 continue;
             }
-            std::vector<int> path = GetPath(graph, towns[i], towns[i + 1]);
-            for (int j = 0; j < path.size() - 1; j++) {
-                int src = path[j];
-                int dst = path[j + 1];
-                connected.insert({std::min(src, dst), std::max(src, dst)});
-                visited[src] = true;
-                visited[dst] = true;
+            int start = towns[i];
+            int end = towns[i + 1];
+            for (int j = 0; j < 2; j++) {
+                std::vector<int> path = GetPath(graph, connected, start, end);
+                for (int j = 0; j < path.size() - 1; j++) {
+                    int src = path[j];
+                    int dst = path[j + 1];
+                    essential.insert({std::min(src, dst), std::max(src, dst)});
+                    connected.insert(src);
+                    connected.insert(dst);
+                }
+                std::swap(start, end);
             }
         }
     }
     int result = 0;
     for (const std::pair<int, int>& edge: edges) {
-        if (connected.find(edge) != connected.end()) {
+        if (essential.find(edge) != essential.end()) {
             continue;
         }
         result++;
