@@ -68,7 +68,7 @@ Arguments ParseArguments(int argc, char* argv[]) {
 }
 
 bool file_exist(const std::string& file_name) {
-  return access(file_name.c_str(), F_OK) != -1;
+    return access(file_name.c_str(), F_OK) != -1;
 }
 
 bool delete_file(const std::string& file_name) {
