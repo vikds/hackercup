@@ -23,7 +23,7 @@ Rank: `4174`th out of `6789` (total participants `12692`)
 
 Score: `12/100` points
 
-Rank: `2573`th out of `2825` (total participants `6789`)
+Rank: `2572`th out of `2825` (total participants `6789`)
 
 ## C++ requirements
 
