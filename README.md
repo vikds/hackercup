@@ -1,5 +1,7 @@
 # Facebook Hacker Cup just for fun.
 
+Just having fun...
+
 https://www.facebook.com/codingcompetitions/hacker-cup/
 
 ## Certificate
