@@ -6,7 +6,7 @@ https://www.facebook.com/codingcompetitions/hacker-cup/
 
 ## Certificate
 
-![certificate](certificate.png "Certificate")
+![certificate](2021/certificate.png "Certificate")
 
 [Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2021/certificate/2945131779054766)
 
