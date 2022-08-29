@@ -4,25 +4,37 @@ Just having fun...
 
 https://www.facebook.com/codingcompetitions/hacker-cup/
 
-## Certificate
+## Certificate 2022
+
+![certificate](2022/certificate.png "Certificate")
+
+[Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2022/certificate/2945131779054766)
+
+## Certificate 2021
 
 ![certificate](2021/certificate.png "Certificate")
 
 [Certificate](https://www.facebook.com/codingcompetitions/hacker-cup/2021/certificate/2945131779054766)
 
-### Online Qualifications
+### Online Qualifications 2022
+
+Score: `50/100` points
+
+Rank: `1274`th out of `12477` (total participants `27603`)
+
+### Online Qualifications 2021
 
 Score: `43/100` points
 
 Rank: `4037`th out of `12692` (total participants `34586`)
 
-### Round 1
+### Round 1 2021
 
 Score: `28/100` points
 
 Rank: `4174`th out of `6789` (total participants `12692`)
 
-### Round 2
+### Round 2 2021
 
 Score: `12/100` points
 
