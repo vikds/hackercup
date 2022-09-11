@@ -75,6 +75,79 @@ bool delete_file(const std::string& file_name) {
     return unlink(file_name.c_str()) != -1;
 }
 
+static const int MIN_INT = std::numeric_limits<int>::min();
+
+bool ResultA(const std::vector<int>& origin, std::vector<int>& moved, int K) {
+    if (origin.size() != moved.size() || origin.empty()) {
+        return false;
+    }
+    if (K == 0) {
+        return origin == moved;
+    }
+    int m_idx = 0 ;
+    for (int m = 0; m < moved.size(); m++) {
+        if (moved[m] == origin.front()) {
+            m_idx = m; 
+            break;
+        }
+    }
+    int o_idx = 0;
+    int count = 0;
+    int shifts = 0;
+    size_t size = origin.size();
+    while (count < size) {
+        if (moved[m_idx] != origin[o_idx]) {
+            shifts++;
+            count++;
+            continue;
+        }
+        m_idx++;
+        m_idx %= moved.size();
+        o_idx++;
+        o_idx %= origin.size();
+        count++;
+    }
+    return shifts == K - 1;
+}
+
+static const std::string YES_PRHRASE = "YES";
+static const std::string NO_PRHRASE = "NO";
+
+void SolveA(const Arguments& args) {
+    std::ifstream input(args.input_file);
+    std::ofstream output(args.output_file);
+
+    int N;
+    int K;
+
+    int tasks;
+    input >> tasks;
+    for (int t = 1; t <= tasks; t++) {
+        std::vector<int> moved;
+        std::vector<int> origin;
+        input >> N;
+        input >> K;
+        int o = 0;
+        for (int i = 0; i < N; i++) {
+            input >> o;
+            origin.push_back(o);
+        }
+        int m = 0;
+        for (int i = 0; i < N; i++) {
+            input >> m;
+            moved.push_back(m);
+        }
+        output << "Case #" << t << ": ";
+        if (ResultA(origin, moved, K)) {
+            output << YES_PRHRASE;
+        } else {
+            output << NO_PRHRASE;
+        }
+        output << std::endl;
+    }
+    return;
+}
+
 int main(int argc, char* argv[]) {
     try {
         Arguments args = ParseArguments(argc, argv);
@@ -87,7 +160,7 @@ int main(int argc, char* argv[]) {
             delete_file(args.output_file);
         }
 
-        SolveD(args);
+        SolveA(args);
 
     } catch(const std::exception& ex) {
         std::cerr << "Exception: " << ex.what() << std::endl;
