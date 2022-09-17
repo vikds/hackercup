@@ -110,8 +110,8 @@ bool ResultA(const std::vector<int>& origin, std::vector<int>& moved, int K) {
     return shifts == K - 1;
 }
 
-static const std::string YES_PRHRASE = "YES";
-static const std::string NO_PRHRASE = "NO";
+static const std::string YES_PHRASE = "YES";
+static const std::string NO_PHRASE = "NO";
 
 void SolveA(const Arguments& args) {
     std::ifstream input(args.input_file);
@@ -139,9 +139,9 @@ void SolveA(const Arguments& args) {
         }
         output << "Case #" << t << ": ";
         if (ResultA(origin, moved, K)) {
-            output << YES_PRHRASE;
+            output << YES_PHRASE;
         } else {
-            output << NO_PRHRASE;
+            output << NO_PHRASE;
         }
         output << std::endl;
     }
